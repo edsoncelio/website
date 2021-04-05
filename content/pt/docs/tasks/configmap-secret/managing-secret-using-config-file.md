@@ -13,7 +13,7 @@ description: Criando Secrets usando arquivos de configuração de recursos.
 
 <!-- steps -->
 
-## Create the Config file
+## Crie o arquivo de configuração
 
 You can create a Secret in a file first, in JSON or YAML format, and then
 create that object.  The
