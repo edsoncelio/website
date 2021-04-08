@@ -1,8 +1,8 @@
 ---
-title: Managing Secret using kubectl
+title: Gerenciando secrets usando kubectl
 content_type: task
 weight: 10
-description: Creating Secret objects using kubectl command line.
+description: Criando objetos Secrets usando a linha de comando kubectl.
 ---
 
 <!-- overview -->
@@ -13,7 +13,7 @@ description: Creating Secret objects using kubectl command line.
 
 <!-- steps -->
 
-## Create a Secret
+## Crie uma Secret
 
 A `Secret` can contain user credentials required by Pods to access a database.
 For example, a database connection string consists of a username and password.
