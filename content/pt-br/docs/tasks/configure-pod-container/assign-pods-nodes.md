@@ -1,13 +1,11 @@
 ---
-title: Atribuindo Pods aos Nós
+title: Atribuindo Pods a Nós
 content_type: task
-weight: 120
+weight: 150
 ---
 
 <!-- overview -->
-Esta página mostra como atribuir um Pod Kubernetes a um nó particular em um 
-cluster Kubernetes.
-
+Essa página mostra como atribuir um Pod a um nó em particular em um cluster Kubernetes.
 
 ## {{% heading "prerequisites" %}}
 
@@ -18,16 +16,14 @@ cluster Kubernetes.
 
 <!-- steps -->
 
-## Adicione um rótulo a um nó
+## Adicionar uma label a um nó
 
-1. Liste os {{< glossary_tooltip term_id="node" text="nós" >}} em seu cluster, 
-juntamente com seus rótulos:
+1. Liste os {{< glossary_tooltip term_id="node" text="nós" >}} no seu cluster, justamente com as labels:
 
     ```shell
     kubectl get nodes --show-labels
     ```
-
-    A saída é similar a esta:
+    A saída é parecida com isso:
 
     ```shell
     NAME      STATUS    ROLES    AGE     VERSION        LABELS
@@ -35,22 +31,20 @@ juntamente com seus rótulos:
     worker1   Ready     <none>   1d      v1.13.0        ...,kubernetes.io/hostname=worker1
     worker2   Ready     <none>   1d      v1.13.0        ...,kubernetes.io/hostname=worker2
     ```
-
-1. Escolha um de seus nós, e adicione um rótulo a ele:
+1. Escolha um dos seus nós, e adicione uma label:    
 
     ```shell
     kubectl label nodes <your-node-name> disktype=ssd
     ```
+    Onde `<your-node-name>` é o nome do nó que você escolheu.
 
-    onde `<your-node-name>` é o nome do seu nó escolhido.
-
-1. Verifique se seu nó escolhido tem o rótulo `disktype=ssd`:
+1. Verifique se o nó escolhido está com a label `disktype=ssd`:
 
     ```shell
     kubectl get nodes --show-labels
     ```
 
-    A saída é similiar a esta:
+    A saída é parecida com isso:
 
     ```shell
     NAME      STATUS    ROLES    AGE     VERSION        LABELS
@@ -59,17 +53,16 @@ juntamente com seus rótulos:
     worker2   Ready     <none>   1d      v1.13.0        ...,kubernetes.io/hostname=worker2
     ```
 
-    Na saída anterior, você pode ver que o nó `worker0` tem o rótulo `disktype=ssd`.
+    Na saída acima, é possível você ver que o nó `worker0` está com a label `disktype=ssd`.
 
-## Crie um pod que é agendado em seu nó escolhido
+## Criar o pod que vai ser agendado no nó escolhido
 
-Este arquivo de configuração de pod descreve um pod que tem um seletor de nó, 
-`disktype: ssd`. Isto significa que o pod será agendado em um nó que tem o rótulo `disktype=ssd`.
+Esse arquivo de configuração descreve um pod que contém o seletor de nó `disktype: ssd`. 
+Isso quer dizer que esse pod vai ser agendado em um nós que contenha a label `disktype: ssd`.
 
-{{% codenew file="pods/pod-nginx.yaml" %}}
+{{% code_sample file="pods/pod-nginx.yaml" %}}
 
-1. Use o arquivo de configuração para criar um pod que será agendado no nó escolhido:
-    
+1. Use o arquivo de configuração para criar um pod que vai ser agendado no nó escolhido:
     ```shell
     kubectl apply -f https://k8s.io/examples/pods/pod-nginx.yaml
     ```
@@ -80,26 +73,24 @@ Este arquivo de configuração de pod descreve um pod que tem um seletor de nó,
     kubectl get pods --output=wide
     ```
 
-    A saída é similar a esta:
+    A saída é parecida com isso:
     
     ```shell
     NAME     READY     STATUS    RESTARTS   AGE    IP           NODE
     nginx    1/1       Running   0          13s    10.200.0.4   worker0
     ```
+## Criar um pod que vai ser agendado em um nó específico
 
-## Crie um pod que é agendado em um nó específico
+Você também pode agendar um pod em um nó específico configurando `nodeName`.
 
-Você pode também agendar um pod para um nó específico usando `nodeName`.
+{{% code_sample file="pods/pod-nginx-specific-node.yaml" %}}
 
-{{% codenew file="pods/pod-nginx-specific-node.yaml" %}}
-
-Use o arquivo de configuração para criar um pod que será agendado somente no nó `foo-node`.
-
+Use esse arquivo de configuração para criar um pod que vai ser agendado apenas no nó `foo-node`.
 
 
 ## {{% heading "whatsnext" %}}
 
-* Aprenda mais sobre [rótulos e seletores](/docs/concepts/overview/working-with-objects/labels/).
-* Aprenda mais sobre [nós](/docs/concepts/architecture/nodes/).
+* Saiba mais sobre [labels e seletores](/docs/concepts/overview/working-with-objects/labels/).
+* Saiba mais sobre nós [nodes](/docs/concepts/architecture/nodes/).
 
 
